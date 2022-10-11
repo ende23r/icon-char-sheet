@@ -13,11 +13,16 @@ class LikeButton extends React.Component {
       return 'You liked this.';
     }
 
-    return e(
-      'button',
+    const button = React.createElement(
+        'button',
       { onClick: () => this.setState({ liked: true }) },
       'Like'
     );
+
+    return e(
+        'span',
+        {},
+        ['Hi!', button]);
   }
 }
 
