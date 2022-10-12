@@ -1,45 +1,93 @@
 'use strict';
 
+// Note: have to import as .js file to satisfy Content-Type header
+import { CharacterSheet, JobSheet, BondSheet } from './CharacterSheet.js';
+
 const e = React.createElement;
 
-function JobSheet(props) {
-    const [loading, setLoading] = React.useState(false);
+//  interface TabPanelProps {
+  //  children?: React.ReactNode;
+  //  index: number;
+  //  value: number;
+//  }
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    const childBox = e(
+        MaterialUI.Box,
+        { p: 3 },
+        [children],
+    );
 
     return e(
-        MaterialUI.Box,
-        props,
-        ["Here we can talk about the job you chose."]
+        "div",
+        {
+            role: "tabpanel",
+            hidden: value !== index,
+            id: `simple-tabpanel-${index}`,
+            'aria-labelledby': `simple-tab-${index}`,
+        },
+        [value === index && childBox]
     );
 }
 
-class CharacterSheet extends React.Component {
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
+    };
+}
+
+class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { liked: false };
+        this.state = { value: 0 };
     }
 
     render() {
-        if (this.state.liked) {
-            return 'You liked this.';
-        }
+        const jobTab = TabPanel({
+            index: 0,
+            value: this.state.value,
+            children: [e(JobSheet, {}, [])],
+        });
+        
+        const bondTab = TabPanel({
+            index: 1,
+            value: this.state.value,
+            children: [e(BondSheet, {}, [])],
+        });
 
-        const button = React.createElement(
-            'button',
-            { onClick: () => this.setState({ liked: true }),
-                key: 'LikeButton1'},
-            'Like'
+        const characterSheet = e(
+            CharacterSheet,
+            { key: "character-sheet" },
+            [],
         );
 
-        const jobsheet = e(
-            JobSheet,
-            { key: 'jobsheet' },
-            []
-        );
+        const tabsBox = e(
+            MaterialUI.Box,
+            {},
+            e(
+                MaterialUI.Tabs,
+                {
+                    value: this.state.value,
+                    onChange: (_e, newValue) =>
+                    this.setState({ value: newValue }),
+                },
+                [
+                    e(MaterialUI.Tab, {key: "job-sheet", label: "Job Sheet"}, []),
+                    e(MaterialUI.Tab, {key: "bond-sheet", label: "Bond Sheet"}, []),
+                ]
+            ));
 
-        return [jobsheet, button];
+        return e(
+            MaterialUI.Box,
+            {},
+            [characterSheet, tabsBox, jobTab, bondTab]
+        );
     }
 }
 
 const domContainer = document.querySelector('#react-root');
 const root = ReactDOM.createRoot(domContainer);
-root.render(e(CharacterSheet));
+root.render(e(App));
