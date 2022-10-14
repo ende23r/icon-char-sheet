@@ -2,11 +2,163 @@
 //TODO: flesh these out with components: https://mui.com/material-ui/react-app-bar/
 
 export function JobSheet(props) {
-    return ("Here we can talk about the job you chose.");
+    const fields = [
+        {
+            type: MaterialUI.Select,
+            props: {
+                label: "Current Job",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Current HP",
+                variant: "outlined",
+            },
+            children: [40],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Personal Resolve",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Relic",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Limit Break",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Abilities",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Trophies",
+                variant: "outlined",
+            },
+            children: [],
+        },
+    ];
+
+    const elements = fields.map((field) => React.createElement(
+        field.type,
+        field.props,
+        field.children
+    ));
+
+    return React.createElement(
+        MaterialUI.Box,
+        {},
+        elements,
+    );
 }
 
 export function BondSheet(props) {
-    return ("Here we can talk about the bond you chose.");
+    const fields = [
+        {
+            type: MaterialUI.Select,
+            props: {
+                label: "Bond",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Effort",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Strain",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Bond Powers",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Actions",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Special Actions",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Ideals",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Ambitions",
+                variant: "outlined",
+            },
+            children: [],
+        },
+        {
+            type: MaterialUI.TextField,
+            props: {
+                label: "Burdens",
+                variant: "outlined",
+            },
+            children: [],
+        },
+    ];
+
+    const elements = fields.map((field) => React.createElement(
+        field.type,
+        field.props,
+        field.children
+    ));
+
+    return React.createElement(
+        MaterialUI.Box,
+        {},
+        elements,
+    );
 } 
 
 const KINTYPES = [
