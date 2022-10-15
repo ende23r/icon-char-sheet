@@ -5,18 +5,17 @@ import { CharacterSheet, JobSheet, BondSheet } from './CharacterSheet.js';
 
 const e = React.createElement;
 
-//  interface TabPanelProps {
-  //  children?: React.ReactNode;
-  //  index: number;
-  //  value: number;
-//  }
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
-    const childBox = e(
-        MaterialUI.Box,
-        { p: 3 },
+    const childGrid = e(
+        MaterialUI.Grid,
+        {
+            p: 3,
+            container: true,
+            item: true,
+            xs: 12,
+        },
         [children],
     );
 
@@ -28,7 +27,7 @@ function TabPanel(props) {
             id: `simple-tabpanel-${index}`,
             'aria-labelledby': `simple-tab-${index}`,
         },
-        [value === index && childBox]
+        [value === index && childGrid]
     );
 }
 
@@ -64,9 +63,12 @@ class App extends React.Component {
             [],
         );
 
-        const tabsBox = e(
-            MaterialUI.Box,
-            {},
+        const tabsGrid = e(
+            MaterialUI.Grid,
+            {
+                item: true,
+                xs: 12,
+            },
             e(
                 MaterialUI.Tabs,
                 {
@@ -75,15 +77,15 @@ class App extends React.Component {
                     this.setState({ value: newValue }),
                 },
                 [
-                    e(MaterialUI.Tab, {key: "job-sheet", label: "Job Sheet"}, []),
-                    e(MaterialUI.Tab, {key: "bond-sheet", label: "Bond Sheet"}, []),
+                    e(MaterialUI.Tab, {key: "job-sheet", label: "Job Sheet"}),
+                    e(MaterialUI.Tab, {key: "bond-sheet", label: "Bond Sheet"}),
                 ]
             ));
 
         return e(
-            MaterialUI.Box,
-            {},
-            [characterSheet, tabsBox, jobTab, bondTab]
+            MaterialUI.Grid,
+            { container: true },
+            [characterSheet, tabsGrid, jobTab, bondTab]
         );
     }
 }
