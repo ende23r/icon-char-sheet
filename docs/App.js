@@ -1,7 +1,9 @@
 'use strict';
 
 // Note: have to import as .js file to satisfy Content-Type header
-import { CharacterSheet, JobSheet, BondSheet } from './CharacterSheet.js';
+import { CharacterSheet,  } from './CharacterSheet.js';
+import { JobSheet } from './JobSheet.js';
+import { BondSheet  } from './BondSheet.js';
 
 const e = React.createElement;
 
@@ -38,56 +40,60 @@ function a11yProps(index) {
     };
 }
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { value: 0 };
+function App(props) {
+    const [selectedTab, setTab] = React.useState(0);
+    const [character, setCharacter] = React.useState({});
+
+    const updateCharacter = (newData) => {
+        const newCharacter = Object.assign(character, newData);
+        setCharacter(newCharacter);
     }
 
-    render() {
-        const jobTab = TabPanel({
-            index: 0,
-            value: this.state.value,
-            children: [e(JobSheet, {}, [])],
-        });
-        
-        const bondTab = TabPanel({
-            index: 1,
-            value: this.state.value,
-            children: [e(BondSheet, {}, [])],
-        });
+    const jobTab = TabPanel({
+        index: 0,
+        value: selectedTab,
+        children: [e(JobSheet, {})],
+    });
 
-        const characterSheet = e(
-            CharacterSheet,
-            { key: "character-sheet" },
-            [],
-        );
+    const bondTab = TabPanel({
+        index: 1,
+        value: selectedTab,
+        children: [e(BondSheet, {})],
+    });
 
-        const tabsGrid = e(
-            MaterialUI.Grid,
+    const characterSheet = e(
+        CharacterSheet,
+        {
+            key: "character-sheet",
+            character,
+            updateCharacter,
+        },
+    );
+
+    const tabsGrid = e(
+        MaterialUI.Grid,
+        {
+            item: true,
+            xs: 12,
+        },
+        e(
+            MaterialUI.Tabs,
             {
-                item: true,
-                xs: 12,
+                value: selectedTab,
+                onChange: (_e, newValue) =>
+                setTab(newValue),
             },
-            e(
-                MaterialUI.Tabs,
-                {
-                    value: this.state.value,
-                    onChange: (_e, newValue) =>
-                    this.setState({ value: newValue }),
-                },
-                [
-                    e(MaterialUI.Tab, {key: "job-sheet", label: "Job Sheet"}),
-                    e(MaterialUI.Tab, {key: "bond-sheet", label: "Bond Sheet"}),
-                ]
-            ));
+            [
+                e(MaterialUI.Tab, {key: "job-sheet", label: "Job Sheet"}),
+                e(MaterialUI.Tab, {key: "bond-sheet", label: "Bond Sheet"}),
+            ]
+        ));
 
-        return e(
-            MaterialUI.Grid,
-            { container: true },
-            [characterSheet, tabsGrid, jobTab, bondTab]
-        );
-    }
+    return e(
+        MaterialUI.Grid,
+        { container: true },
+        [characterSheet, tabsGrid, jobTab, bondTab]
+    );
 }
 
 const domContainer = document.querySelector('#react-root');
