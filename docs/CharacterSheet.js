@@ -1,165 +1,6 @@
+'use strict';
 
-//TODO: flesh these out with components: https://mui.com/material-ui/react-app-bar/
-
-export function JobSheet(props) {
-    const fields = [
-        {
-            type: MaterialUI.Select,
-            props: {
-                label: "Current Job",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Current HP",
-                variant: "outlined",
-            },
-            children: [40],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Personal Resolve",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Relic",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Limit Break",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Abilities",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Trophies",
-                variant: "outlined",
-            },
-            children: [],
-        },
-    ];
-
-    const elements = fields.map((field) => React.createElement(
-        field.type,
-        field.props,
-        field.children
-    ));
-
-    return React.createElement(
-        MaterialUI.Grid,
-        {},
-        elements,
-    );
-}
-
-export function BondSheet(props) {
-    const fields = [
-        {
-            type: MaterialUI.Select,
-            props: {
-                label: "Bond",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Effort",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Strain",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Bond Powers",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Actions",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Special Actions",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Ideals",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Ambitions",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Burdens",
-                variant: "outlined",
-            },
-            children: [],
-        },
-    ];
-
-    const elements = fields.map((field) => React.createElement(
-        field.type,
-        field.props,
-        field.children
-    ));
-
-    return React.createElement(
-        MaterialUI.Grid,
-        {},
-        elements,
-    );
-} 
+import { makeMenuItem } from './Util.js';
 
 const KINTYPES = [
     "Beastfolk",
@@ -192,158 +33,125 @@ function createDefaultCharacter() {
     };
 }
 
-function makeMenuItem(name) {
-    return React.createElement(
-        MaterialUI.MenuItem,
-        {
-            value: name,
-            key: `menuitem-${name}`,
-        },
-        name,
-    );
-}
-
 export function CharacterSheet(props) {
-    const character = createDefaultCharacter();
+    const { character, updateCharacter } = props;
 
-    const fields = [
+    const elementRows = [];
+    const firstRow = [];
+    firstRow.push(React.createElement(
+        MaterialUI.TextField,
         {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Name",
-                field: "name",
-                variant: "outlined",
-                defaultValue: "Name",
+            label: "Name",
+            variant: "outlined",
+            value: character.name,
+            onChange: (event) => updateCharacter({ name: event.target.value })
+        },
+    ));
+    firstRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Pronouns",
+            variant: "outlined",
+            value: character.pronouns,
+            onChange: (event) => updateCharacter({ pronouns: event.target.value })
+        },
+    ));
+    elementRows.push(firstRow);
+
+    const secondRow = [];
+    // TODO: Not sure how to get these Selects (Kintype and Culture) to render with a default placeholder. Maybe make them a minimum width?
+    secondRow.push(React.createElement(
+        MaterialUI.InputLabel,
+        {
+            id: "kintype-select-helper-label",
+        },
+        "Kintype",
+    ));
+    secondRow.push(React.createElement(
+        MaterialUI.Select,
+        {
+            label: "Kintype",
+            labelid: "kintype-select-helper-label",
+            style: {
+                width: 130,  // pixels, a bit larger than the largest selectable item
             },
-            children: [],
+            value: character.pronouns,
+            onChange: (event) => updateCharacter({ pronouns: event.target.value })
         },
+        KINTYPES.map(kt => makeMenuItem(kt)),
+    ));
+    secondRow.push(React.createElement(
+        MaterialUI.InputLabel,
         {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Pronouns",
-                variant: "outlined",
+            id: "culture-select-helper-label",
+        },
+        "Culture",
+    ));
+    secondRow.push(React.createElement(
+        MaterialUI.Select,
+        {
+            labelId: "culture-select-helper-label",
+            style: {
+                width: 130,  // pixels, a bit larger than the largest selectable item
             },
-            children: [],
+            value: character.pronouns,
+            onChange: (event) => updateCharacter({ pronouns: event.target.value })
         },
-        // TODO: Not sure how to get these Selects (Kintype and Culture) to render with a default placeholder. Maybe make them a minimum width?
+        CULTURES.map(culture => makeMenuItem(culture)),
+    ));
+    elementRows.push(secondRow);
+
+    const thirdRow = [];
+    thirdRow.push(React.createElement(
+        MaterialUI.TextField,
         {
-            type: MaterialUI.InputLabel,
-            props: { id: "kintype-select-helper-label" },
-            children: "Kintype",
+            label: "Level",
+            variant: "outlined",
+            pattern: "[0-9]*",
         },
+    ));
+    thirdRow.push(React.createElement(
+        MaterialUI.TextField,
         {
-            type: MaterialUI.Select,
-            props: {
-                label: "Kintype",
-                labelid: "kintype-select-helper-label",
-                width: 120,  // 120 pixels, a bit larger than the largest selectable item
-            },
-            children: KINTYPES.map(kt => makeMenuItem(kt)),
+            label: "EXP",
+            variant: "outlined",
         },
+    ));
+    thirdRow.push(React.createElement(
+        MaterialUI.TextField,
         {
-            type: MaterialUI.InputLabel,
-            props: {
-                id: "culture-select-helper-label",
-            },
-            children: "Culture",
+            label: "Dust",
+            variant: "outlined",
         },
+    ));
+    elementRows.push(thirdRow);
+
+    const fourthRow = [];
+    fourthRow.push(React.createElement(
+        MaterialUI.TextField,
         {
-            type: MaterialUI.Select,
-            props: {
-                label: "Culture",
-                labelid: "culture-select-helper-label",
-                width: 120,  // 120 pixels, a bit larger than the largest selectable item
-            },
-            children: CULTURES.map(culture => makeMenuItem(culture)),
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Level",
-                variant: "outlined",
-                pattern: "[0-9]*",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "EXP",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Dust",
-                variant: "outlined",
-            },
-            children: [],
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Description",
+            label: "Description",
                 variant: "outlined",
                 multiline: true,
-            },
-            children: [],
         },
-    ];
+    ));
+    elementRows.push(fourthRow);
 
-    const topRowElements = fields.slice(0,6).map((field) => {
-        const defaultVal = field.props.defaultValue === 0 ? 0 : (field.props.defaultValue || "");
-        const [fieldVal, updateField] = React.useState(defaultVal);
-        return React.createElement(
-            field.type,
+    const gridElements = elementRows.map((elements) =>
+        React.createElement(
+            MaterialUI.Grid,
             {
-                onChange: field.type !== MaterialUI.Grid ? ((event) => updateField(event.target.value)) : undefined,
-                value: fieldVal,
-                ...field.props,
+                item: true,
+                xs: 12,
+                style: { display: "flex", flexDirection: "row" },
             },
-            field.children
-        );
-    });
-
-    const bottomRowElements = fields.slice(6).map((field) => {
-        const defaultVal = field.props.defaultValue === 0 ? 0 : (field.props.defaultValue || "");
-        const [fieldVal, updateField] = React.useState(defaultVal);
-        return React.createElement(
-            field.type,
-            {
-                onChange: field.type !== MaterialUI.Grid ? ((event) => updateField(event.target.value)) : undefined,
-                value: fieldVal,
-                ...field.props,
-            },
-            field.children
-        );
-    });
-
+            elements
+        ));
     return React.createElement(
         MaterialUI.Grid,
         {
             label: "Personal Details",
             container: true,
         },
-        [
-            React.createElement(
-                MaterialUI.Grid,
-                {
-                    container: true,
-                    item: true,
-                    xs: 12,
-                },
-                topRowElements,
-            ),
-            React.createElement(
-                MaterialUI.Grid,
-                {
-                    container: true,
-                    item: true,
-                    xs: 12,
-                },
-                bottomRowElements,
-            ),
-        ],);
+        gridElements);
 }
