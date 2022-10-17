@@ -33,68 +33,85 @@ const JOBS = [
 export function JobSheet(props) {
     const jobOptions = JOBS.map((job) => makeMenuItem(job));
 
-    const fields = [
+    const rows = [];
+    const firstRow = [];
+    firstRow.push(React.createElement(
+        MaterialUI.Select,
         {
-            type: MaterialUI.Select,
-            props: {
-                label: "Current Job",
-            },
-            children: jobOptions,
+            label: "Current Job",
         },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Current HP",
-                variant: "outlined",
-            },
-            children: 40,
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Personal Resolve",
-                variant: "outlined",
-            },
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Relic",
-                variant: "outlined",
-            },
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Limit Break",
-                variant: "outlined",
-            },
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Abilities",
-                variant: "outlined",
-            },
-        },
-        {
-            type: MaterialUI.TextField,
-            props: {
-                label: "Trophies",
-                variant: "outlined",
-            },
-        },
-    ];
-
-    const elements = fields.map((field) => React.createElement(
-        field.type,
-        field.props,
-        field.children
+        jobOptions,
     ));
+    rows.push(firstRow);
+
+    const secondRow = [];
+    secondRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Current HP",
+            variant: "outlined",
+        },
+        40,
+    ));
+
+    secondRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Personal Resolve",
+            variant: "outlined",
+        },
+    ));
+    rows.push(secondRow);
+
+    const thirdRow = [];
+    thirdRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Limit Break",
+            variant: "outlined",
+        },
+    ));
+    thirdRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Abilities",
+            variant: "outlined",
+        },
+    ));
+    rows.push(thirdRow);
+
+    const fourthRow = [];
+    fourthRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Relic",
+            variant: "outlined",
+        },
+    ));
+    fourthRow.push(React.createElement(
+        MaterialUI.TextField,
+        {
+            label: "Trophies",
+            variant: "outlined",
+        },
+    ));
+    rows.push(fourthRow);
+
+    const elements = rows.map((row) => {
+        return React.createElement(
+            MaterialUI.Grid,
+            {
+                item: true,
+                xs: 12,
+                style: {},
+            },
+            row
+        );
+    });
 
     return React.createElement(
         MaterialUI.Grid,
-        {},
+        { container: true },
         elements,
     );
 }
