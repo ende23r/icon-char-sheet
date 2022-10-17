@@ -107,9 +107,39 @@ export function CharacterSheet(props) {
         {
             label: "Level",
             variant: "outlined",
-            pattern: "[0-9]*",
+            disabled: true,
+            value: character.level,
         },
     ));
+    thirdRow.push(React.createElement(
+        MaterialUI.IconButton,
+        {
+            onClick: () => updateCharacter({
+                level: character.level + 1
+            }),
+        },
+        React.createElement(
+            MaterialUI.Icon,
+            {},
+            React.createElement(
+                "img",
+                {
+                    className: "classes.ImageIcon",
+                    src: "svg/add_black_24dp.svg",
+                },
+            )
+        )
+    ));
+//    thirdRow.push(React.createElement(
+//        MaterialUI.IconButton,
+//        {
+//            onClick: () => updateCharacter({
+//                level: character.level - 1
+//            }),
+//        },
+//        React.createElement(MaterialUI.Remove)
+//    ));
+
     thirdRow.push(React.createElement(
         MaterialUI.TextField,
         {
@@ -131,8 +161,8 @@ export function CharacterSheet(props) {
         MaterialUI.TextField,
         {
             label: "Description",
-                variant: "outlined",
-                multiline: true,
+            variant: "outlined",
+            multiline: true,
         },
     ));
     elementRows.push(fourthRow);
