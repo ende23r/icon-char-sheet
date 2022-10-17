@@ -18,21 +18,6 @@ const CULTURES = [
     "Yeokin",
 ];
 
-function createDefaultCharacter() {
-    return {
-        name: "Name",
-        pronouns: "",
-        kintype: "",
-        culture: "",
-        level: 0,
-        exp: 0,
-        dust: 0,
-        description: "",
-        bond: {},
-        job: {},
-    };
-}
-
 export function CharacterSheet(props) {
     const { character, updateCharacter } = props;
 
@@ -101,14 +86,14 @@ export function CharacterSheet(props) {
     ));
     elementRows.push(secondRow);
 
+    console.log("Level:", props.character.level);
     const thirdRow = [];
     thirdRow.push(React.createElement(
         MaterialUI.TextField,
         {
             label: "Level",
             variant: "outlined",
-            disabled: true,
-            value: character.level,
+            value: character.level
         },
     ));
     thirdRow.push(React.createElement(

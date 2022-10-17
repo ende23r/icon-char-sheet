@@ -40,9 +40,24 @@ function a11yProps(index) {
     };
 }
 
+function createDefaultCharacter() {
+    return {
+        name: "Name",
+        pronouns: "",
+        kintype: "",
+        culture: "",
+        level: 0,
+        exp: 0,
+        dust: 0,
+        description: "",
+        bond: {},
+        job: {},
+    };
+}
+
 function App(props) {
     const [selectedTab, setTab] = React.useState(0);
-    const [character, setCharacter] = React.useState({});
+    const [character, setCharacter] = React.useState(createDefaultCharacter());
 
     const updateCharacter = (newData) => {
         const newCharacter = Object.assign(character, newData);
@@ -64,7 +79,6 @@ function App(props) {
     const characterSheet = e(
         CharacterSheet,
         {
-            key: "character-sheet",
             character,
             updateCharacter,
         },
