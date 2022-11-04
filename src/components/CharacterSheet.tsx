@@ -1,4 +1,3 @@
-'use strict';
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -6,8 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
-
-import { makeMenuItem } from '../util/Util';
+import MenuItem from '@mui/material/MenuItem';
 
 const KINTYPES = [
     "Beastfolk",
@@ -70,7 +68,7 @@ export function CharacterSheet(props: any) {
             value: character.pronouns,
             onChange: (event) => updateCharacter({ pronouns: event.target.value })
         },
-        KINTYPES.map(kt => makeMenuItem(kt)),
+        KINTYPES.map(kt => (<MenuItem value={kt}/>)),
     ));
     secondRow.push(React.createElement(
         InputLabel,
@@ -89,7 +87,7 @@ export function CharacterSheet(props: any) {
             value: character.pronouns,
             onChange: (event) => updateCharacter({ pronouns: event.target.value })
         },
-        CULTURES.map(culture => makeMenuItem(culture)),
+        CULTURES.map(culture => (<MenuItem value={culture}/>)),
     ));
     elementRows.push(secondRow);
 

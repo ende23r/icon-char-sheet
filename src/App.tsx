@@ -7,6 +7,7 @@ import { CharacterSheet } from './components/CharacterSheet';
 function App() {
   return (
     <div className="App">
+      <h1>ICON Character Sheet</h1>
       <CharacterSheet character={{}} />
     </div>
   )
