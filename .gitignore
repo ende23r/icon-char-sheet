@@ -1,2 +1,2 @@
-#Ignore dev scripts
-*.sh
+#Ignore node_modules
+node_modules
