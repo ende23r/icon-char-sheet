@@ -1,6 +1,13 @@
 'use strict';
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Select from '@mui/material/Select';
+import Grid from '@mui/material/Grid';
 
-import { makeMenuItem } from './Util.js';
+import { makeMenuItem } from '../util/Util';
 
 const KINTYPES = [
     "Beastfolk",
@@ -18,13 +25,13 @@ const CULTURES = [
     "Yeokin",
 ];
 
-export function CharacterSheet(props) {
+export function CharacterSheet(props: any) {
     const { character, updateCharacter } = props;
 
     const elementRows = [];
     const firstRow = [];
     firstRow.push(React.createElement(
-        MaterialUI.TextField,
+        TextField,
         {
             label: "Name",
             variant: "outlined",
@@ -33,7 +40,7 @@ export function CharacterSheet(props) {
         },
     ));
     firstRow.push(React.createElement(
-        MaterialUI.TextField,
+        TextField,
         {
             label: "Pronouns",
             variant: "outlined",
@@ -46,17 +53,17 @@ export function CharacterSheet(props) {
     const secondRow = [];
     // TODO: Not sure how to get these Selects (Kintype and Culture) to render with a default placeholder. Maybe make them a minimum width?
     secondRow.push(React.createElement(
-        MaterialUI.InputLabel,
+        InputLabel,
         {
             id: "kintype-select-helper-label",
         },
         "Kintype",
     ));
     secondRow.push(React.createElement(
-        MaterialUI.Select,
+        Select,
         {
             label: "Kintype",
-            labelid: "kintype-select-helper-label",
+            labelId: "kintype-select-helper-label",
             style: {
                 width: 130,  // pixels, a bit larger than the largest selectable item
             },
@@ -66,14 +73,14 @@ export function CharacterSheet(props) {
         KINTYPES.map(kt => makeMenuItem(kt)),
     ));
     secondRow.push(React.createElement(
-        MaterialUI.InputLabel,
+        InputLabel,
         {
             id: "culture-select-helper-label",
         },
         "Culture",
     ));
     secondRow.push(React.createElement(
-        MaterialUI.Select,
+        Select,
         {
             labelId: "culture-select-helper-label",
             style: {
@@ -89,7 +96,7 @@ export function CharacterSheet(props) {
     console.log("Level:", props.character.level);
     const thirdRow = [];
     thirdRow.push(React.createElement(
-        MaterialUI.TextField,
+        TextField,
         {
             label: "Level",
             variant: "outlined",
@@ -97,14 +104,14 @@ export function CharacterSheet(props) {
         },
     ));
     thirdRow.push(React.createElement(
-        MaterialUI.IconButton,
+        IconButton,
         {
             onClick: () => updateCharacter({
                 level: character.level + 1
             }),
         },
         React.createElement(
-            MaterialUI.Icon,
+            Icon,
             {},
             React.createElement(
                 "img",
@@ -116,7 +123,7 @@ export function CharacterSheet(props) {
         )
     ));
 //    thirdRow.push(React.createElement(
-//        MaterialUI.IconButton,
+//        IconButton,
 //        {
 //            onClick: () => updateCharacter({
 //                level: character.level - 1
@@ -126,14 +133,14 @@ export function CharacterSheet(props) {
 //    ));
 
     thirdRow.push(React.createElement(
-        MaterialUI.TextField,
+        TextField,
         {
             label: "EXP",
             variant: "outlined",
         },
     ));
     thirdRow.push(React.createElement(
-        MaterialUI.TextField,
+        TextField,
         {
             label: "Dust",
             variant: "outlined",
@@ -143,7 +150,7 @@ export function CharacterSheet(props) {
 
     const fourthRow = [];
     fourthRow.push(React.createElement(
-        MaterialUI.TextField,
+        TextField,
         {
             label: "Description",
             variant: "outlined",
@@ -154,7 +161,7 @@ export function CharacterSheet(props) {
 
     const gridElements = elementRows.map((elements) =>
         React.createElement(
-            MaterialUI.Grid,
+            Grid,
             {
                 item: true,
                 xs: 12,
@@ -163,9 +170,9 @@ export function CharacterSheet(props) {
             elements
         ));
     return React.createElement(
-        MaterialUI.Grid,
+        Grid,
         {
-            label: "Personal Details",
+            // label: "Personal Details",
             container: true,
         },
         gridElements);
